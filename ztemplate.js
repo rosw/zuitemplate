@@ -34,7 +34,7 @@
   	return s.replace(/\{\{ *[\w_]*(\( *)?(\.?[\w_]*)*( *\))? *\}\}/ig,function(w){
   		var w1=w.replace(/\{|\}/ig,'').trim(),m,_f=null;
   		if((m=w1.match(/([\w_]+)\( *([\w\._]*) *\)/))){
-  			_f=m[1];
+  			_f=ext[m[1]];
   			w1=m[2];
   		}
   		var d=w1.split('.');
@@ -44,11 +44,7 @@
   			a=b=='this' ? a : a[b];
   			if(!a) break;
   		}
-  		if(_f){
-  			r+=(typeof ext[_f]=='function'?ext[_f](w1,a):a)||'';
-  		}else{
-  			r+=(isfunc ? f(w1,a) : a) || ''; 
-  		}
+  		r+=(isfunc ? f(w1,a,_f) : (typeof _f=='function'? _f(a) : a)) || '';
   		return r;
   	});
   }
