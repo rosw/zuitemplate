@@ -38,14 +38,13 @@
   			w1=m[2];
   		}
   		var d=w1.split('.');
-  		var r='',a=p;
+  		var a=p;
   		while(d.length){
   			var b=d.shift();
   			a=b=='this' ? a : a[b];
   			if(!a) break;
   		}
-  		r+=(isfunc ? f(w1,a,_f) : (typeof _f=='function'? _f(a) : a)) || '';
-  		return r;
+  		return (isfunc ? f(w1,a,_f) : (typeof _f=='function'? _f(a) : a)) || '';
   	});
   }
   var old=$.template;
