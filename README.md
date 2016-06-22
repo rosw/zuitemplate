@@ -1,5 +1,6 @@
 # zuitemplate
-simple javascript template
+simple javascript template  
+
 		/* 
 		 * 醉悠枫模板系统 使用{{ }} 作为符号
 		 * 例：$.template("this is a {{ tmpl }}",{tmpl:"模板"});
@@ -24,7 +25,6 @@ simple javascript template
 		  });
 		  $.template("this is ul demo <ul>{{ each(tmpl.list) }}</ul>",{tmpl:{list:[{v:'aa'},{v:'bb'},{v:'cc'}]}});
 		  $.template("this is ul demo:<ul>{{ each(tmpl.list) }}</ul>",{tmpl:{list:[{v:"模板1"},{v:"模板2"},{v:"模板3"}]}});
-		 * 高级功能3：this 关键字 {{ this }}  this表示传入的变量本身，可用来做JSON序列化输出
 		 */
 		;(function($){
 		  var tmplext={};
@@ -43,7 +43,7 @@ simple javascript template
 		  		var r='',a=p;
 		  		while(d.length){
 		  			var b=d.shift();
-		  			a=b=='this' ? a : a[b];
+		  			a=b=='this'? a : a[b];
 		  			if(!a) break;
 		  		}
 		  		if(_f){
