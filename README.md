@@ -25,6 +25,7 @@ simple javascript template
 		  });
 		  $.template("this is ul demo <ul>{{ each(tmpl.list) }}</ul>",{tmpl:{list:[{v:'aa'},{v:'bb'},{v:'cc'}]}});
 		  $.template("this is ul demo:<ul>{{ each(tmpl.list) }}</ul>",{tmpl:{list:[{v:"模板1"},{v:"模板2"},{v:"模板3"}]}});
+		 * 高级功能3：this 关键字 {{ this }}  this表示传入的变量本身，可用来做JSON序列化输出
 		 */
 		;(function($){
 		  var tmplext={};
@@ -36,24 +37,20 @@ simple javascript template
 		  	return s.replace(/\{\{ *[\w_]*(\( *)?(\.?[\w_]*)*( *\))? *\}\}/ig,function(w){
 		  		var w1=w.replace(/\{|\}/ig,'').trim(),m,_f=null;
 		  		if((m=w1.match(/([\w_]+)\( *([\w\._]*) *\)/))){
-		  			_f=m[1];
+		  			_f=ext[m[1]];
 		  			w1=m[2];
 		  		}
 		  		var d=w1.split('.');
-		  		var r='',a=p;
+		  		var a=p;
 		  		while(d.length){
 		  			var b=d.shift();
-		  			a=b=='this'? a : a[b];
+		  			a=b=='this' ? a : a[b];
 		  			if(!a) break;
 		  		}
-		  		if(_f){
-		  			r+=(typeof ext[_f]=='function'?ext[_f](w1,a):a)||'';
-		  		}else{
-		  			r+=(isfunc ? f(w1,a) : a) || ''; 
-		  		}
-		  		return r;
+		  		return (isfunc ? f(w1,a,_f) : (typeof _f=='function'? _f(a) : a)) || '';
 		  	});
 		  }
 		  var old=$.template;
 		  $.template = template;
 		})(Zepto || JQuery);
+
